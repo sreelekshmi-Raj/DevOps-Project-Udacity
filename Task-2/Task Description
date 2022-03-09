@@ -1,0 +1,17 @@
+This exercise aims to containerize Python Flask web application.Step-by-step walkthrough of how to package, build, run, tag, and push a Docker image.
+
+To containerize an application using Docker, 3 main components are distinguished: Dockerfiles, Docker images, and Docker registries.
+
+STEPS
+I. Creating Dockerfile : A Dockerfile is a set of instructions used to create a Docker image.
+    1.Create a docker file named "Dockerfile" with set of instructions used to create a Docker image.
+
+II. Creating Docker Image : A Docker image is a read-only template that enables the creation of a runnable instance of an application
+    2.Docker image can be built from an existing Dockerfile using the docker build command : docker build -t python-helloworld .
+    3.Create a container using Docker image "python-helloworld" using docker run command : docker run -d -p 5111:5000 python-helloworld
+    4.Access the application in a browser we need to bind the Docker container port to a port on the host or local machine. In this case, 5111 is the host port that we use to access the application e.g. http://127.0.0.1:5111/. The 5000 is the container port that the application is listening to for incoming requests.
+    5.To retrieve the Docker container logs use the docker logs {{ CONTAINER_ID }} command : docker logs 95173091eb5e
+
+III. Pushing image to a public Docker image registry : Docker registry is a central mechanism to store and distribute Docker images
+    6.Tag the "python-helloworld" application : docker tag python-helloworld pixelpotato/python-helloworld:v1.0.0
+    7.Push the image to a registry : docker push pixelpotato/python-helloworld:v1.0.0
