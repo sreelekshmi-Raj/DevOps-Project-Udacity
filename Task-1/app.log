@@ -1,0 +1,11 @@
+INFO:werkzeug: * Running on http://127.0.0.1:4456/ (Press CTRL+C to quit)
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 801-723-041
+INFO:app:Main request successfull
+INFO:werkzeug:127.0.0.1 - - [09/Mar/2022 13:55:27] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [09/Mar/2022 13:55:27] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+INFO:app:Metrics request successfull
+INFO:werkzeug:127.0.0.1 - - [09/Mar/2022 13:55:35] "GET /metrics HTTP/1.1" 200 -
+INFO:app:Status request successfull
+INFO:werkzeug:127.0.0.1 - - [09/Mar/2022 13:55:41] "GET /status HTTP/1.1" 200 -
