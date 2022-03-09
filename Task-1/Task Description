@@ -1,0 +1,27 @@
+This exercise aims to create a Python Flask web application with status and metrics endpoints.
+
+STEPS
+
+1.Clone course repository : git clone https://github.com/udacity/nd064_course_1.git 
+2.Navigate inside the "excercises/python-helloworld" folder
+3.Using "Python3 app.py" or "flask run" commands run the app.py application
+4.Access application on your local browser using port 5000 - e.g. : http://127.0.0.1:5000/ (Note:Python Flask Uses port 5000 by default)
+
+5.Extend the Python Flask application with "/status" and "/metrics" endpoints.Requirements are following.
+
+- Both endpoints should return an HTTP 200 status code
+- Both endpoints should return a JSON response e.g. {"user": "admin"}. (Note: the JSON response can be hardcoded at this stage)
+- The "/status" endpoint should return a response similar to this example: "result: OK - healthy"
+- The "/metrics" endpoint should return a response similar to this example: "data: {UserCount: 140, UserCountActive: 23}"
+
+6.Access the extended application on your local browser using port 5000 - e.g. : http://127.0.0.1:5000/ and check the endpoints.
+
+7.Bringing the logging capabilities to this application.We extended the application to handle different endpoints.
+Once an endpoint is reached, a log line should be recorded showcasing this operation.
+with the following requirements:
+
+- A log line should be recorded the timestamp and the requested endpoint e.g. "{{TIMESTAMP}}, {{ ENDPOINT_NAME}} endpoint was reached"
+- The logs should be stored in a file with the name "app.log"
+- Enable the collection of Python logs at the DEBUG level.
+
+8.Access the application on your local browser using port 5000 - e.g. : http://127.0.0.1:5000/ and check the logs.
