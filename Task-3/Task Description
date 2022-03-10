@@ -1,0 +1,35 @@
+Package a Go web application using Docker capabilities. This task will involve the creation of a Docker image and pushing it to a public image registry, such as DockerHub.
+
+STEPS
+
+1.Clone course repository : git clone https://github.com/udacity/nd064_course_1.git 
+2.Navigate inside exercises/go-helloworld directory
+3.This application listens on port 6111. To run the application, use the command: go run main.go 
+   Access the application on: http://127.0.0.1:6111/
+
+Package the application using Docker
+
+I. Creating Dockerfile : A Dockerfile is a set of instructions used to create a Docker image.
+    4.Create the Docker file for the Go web application considering the following requirements:
+       - Use the "golang:alpine" base image
+       - Set the working directory to "/go/src/app"
+       - Make sure to copy all the files from the current directory to the container working directory (e.g. /go/src/app)
+       - To build the application, use "go build -o helloworld" command, where -o helloworld will create the binary of the      application with the name helloworld
+       - The application should be accessible on port "6111"
+       - And lastly, the command to start the container is to invoke the binary created earlier, which is "./helloworld"
+
+II. Creating Docker Image : A Docker image is a read-only template that enables the creation of a runnable instance of an application
+    5.Docker image specifications:
+       - Should have the name "go-helloworld"
+       - should have a valid tag, and a version with a major, minor, and patch included
+       - should be available in DockerHub, under your username e.g. pixelpotato/go-helloworld
+
+    6.Docker image can be built from an existing Dockerfile using the docker build command : docker build -t go-helloworld .
+    7.Create a container using Docker image "go-helloworld" using docker run command : docker run -d -p 6111:6111 go-helloworld
+    8.Access the application on: http://127.0.0.1:6111/ or http://localhost:6111/ or http://0.0.0.0:6111/
+    9.To retrieve the Docker container logs use the docker logs {{ CONTAINER_ID }} command : docker logs 95173091eb5e
+
+III. Pushing image to a public Docker image registry : Docker registry is a central mechanism to store and distribute Docker images
+    10.Tag the "go-helloworld" application : docker tag go-helloworld pixelpotato/go-helloworld:v1.0.0
+    11.Push the image to a registry : docker push pixelpotato/go-helloworld:v1.0.0 ["docker login" if needed]
+
