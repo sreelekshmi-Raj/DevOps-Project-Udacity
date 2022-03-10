@@ -1,4 +1,4 @@
-We going to deploy the packaged Go hello-world application to a Kubernetes cluster.Thirough this task we learn how an application can be deployed, configured, and managed within a Kubernetes cluster using Deployment, ReplicaSet, and pod resources.
+We going to deploy the packaged Go hello-world application to a Kubernetes cluster.
 
 IMPORTANT POINTS
 Kubernetes provides a rich collection of resources that are used to deploy, configure, and manage an application. Some of the widely used resources are:
@@ -11,7 +11,10 @@ Kubernetes provides a rich collection of resources that are used to deploy, conf
 
 
 STEPS
-1.Create a Deployment for the Go hello-world application : 
+
+-Through this steps we will learn how an application can be deployed, configured, and managed within a Kubernetes cluster using Deployment, ReplicaSet, and pod resources.
+
+1.Create a "Deployment" for the Go hello-world application : 
    kubectl create deploy go-helloworld --image=pixelpotato/go-helloworld:v1.0.0 
 2.Access the container in a browser/local host we need to use port-forward command.
    kubectl port-forward po/go-helloworld-6998589d46-2ksxr 5111:6111
@@ -23,8 +26,52 @@ STEPS
    kubectl port-forward po/go-helloworld-64477fbc6f-fzqnx 5111:6112
 8.Access the application on: http://127.0.0.1:5111/
 
+-Through this steps we will learn how to expose the Go hello-world application through a ClusterIP service. Additionally, an alpine pod is used to showcase how a workload can connect to the Go hello-world application through the service IP and port from within the cluster.
+
+9.Create a "Service" for the Go hello-world deployment : kubectl expose deploy go-helloworld --port=8111 --target-port=6112
+# --port - required; specify the port that the service should serve on : expose the `go-helloworld` deployment on port 8111
+# --target-port - optional; specify the port on the container that the service should direct traffic to : the application is serving requests on port 6112
+10.Access our application from cluster : kubectl run test-$RANDOM --namespace=default --rm -it --image=alpine -- sh
+then use the command inside the shell :  wget -qO- 10.106.14.97:8111
+
+-Through this steps we will learn how Configmap and Secret resources can be created using literal values from the command line.
+
+11.ConfigMaps : ConfigMaps are objects that store non-confidential data in key-value pairs. 
+   Check for configmaps in the current namespace : kubectl get cm
+   Create a configmap : kubectl create cm test-cm --from-literal=color=blue
+   Verify the configmaps : kubectl get cm
+   Describe configmap : kubectl describe cm test-cm
+
+12.Secrets : Secrets are used to store and distribute sensitive data to the pods, such as passwords or tokens. 
+   Check for secrets in the current namespace : kubectl get secret
+   Create a secrets : kubectl create secret generic test-secret --from-literal=color=red
+   Verify the secrets : kubectl get secret
+   Describe secrets : kubectl describe secret test-secret
+   Get the value of secret in a YAML output :  kubectl get secret test-secret -o yaml
+   Decode the secret value using base64 : echo "cmVk[secret_value]" | base64 -D
+
+-TThrough this steps we will how to create a Namespace resource and retrieve resources from a specific Namespace.
+
+13.Namespaces : A Namespace provides a logical separation between multiple applications and associated resources
+   Check for all currently available namespaces : kubectl get ns
+   Create a new namespace : kubectl create ns test-ns
+   Verify the new namespace : kubectl get ns
+   Get resources from particular name space : kubectl get po -n test-ns
+   Create a resources in a particular name space : kubectl create deploy go-helloworld --image=pixelpotato/go-helloworld:v1.0.0 -n test-ns
+   Describe namespace : kubectl describe ns test-ns
+   Delete a namespace : kubectl delete ns test-ns
 
 OTHER USEFUL COMMANDS
-   - kubectl get deploy / kubectl get deployments 
-   - kubectl get rs / kubectl get replicaset / kubectl get replicasets
    - kubectl get po / kubectl get pod / kubectl get pods
+   - kubectl get rs / kubectl get replicaset / kubectl get replicasets
+   - kubectl get deploy / kubectl get deployments 
+   - kubectl get svc / kubectl get service / kubectl get services
+   - kubectl get cm / kubectl get configmap / kubectl get configmaps 
+   - kubectl get secret / kubectl get secrets
+   - kubectl get ns / kubectl get namespace / kubectl get namespaces
+
+   - kubectl describe resource name : e.g. kubectl describe deploy go-helloworld
+   - kubectl get resource name -o yaml : e.g. kubectl get deploy go-helloworld -o yaml
+   - kubectl edit resource name -o yaml : e.g. kubectl edit deploy go-helloworld -o yaml
+   - kubectl logs RESOURCE/NAME : e.g. kubectl logs deployment.apps/go-helloworld
+   - kubectl delete RESOURCE NAME : e.g. kubectl delete deployment go-helloworld
