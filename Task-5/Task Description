@@ -57,14 +57,14 @@ then use the command inside the shell :  wget -qO- 10.106.14.97:8111
    Create a new namespace : kubectl create ns test-ns
    Verify the new namespace : kubectl get ns
    Get resources from particular name space : kubectl get po -n test-ns
-   Create a resources in a particular name space : kubectl create deploy go-helloworld --image=pixelpotato/go-helloworld:v1.0.0 -n test-ns
+   Create a resources in a particular name space : kubectl create deploy go-helloworld --image=pixelpotato/go-helloworld:v1.0.0  -n test-ns
    Describe namespace : kubectl describe ns test-ns
    Delete a namespace : kubectl delete ns test-ns
 
 OTHER USEFUL COMMANDS
    - kubectl get po / kubectl get pod / kubectl get pods
    - kubectl get rs / kubectl get replicaset / kubectl get replicasets
-   - kubectl get deploy / kubectl get deployments 
+   - kubectl get deploy / kubectl get deployment / kubectl get deployments 
    - kubectl get svc / kubectl get service / kubectl get services
    - kubectl get cm / kubectl get configmap / kubectl get configmaps 
    - kubectl get secret / kubectl get secrets
@@ -75,3 +75,4 @@ OTHER USEFUL COMMANDS
    - kubectl edit resource name -o yaml : e.g. kubectl edit deploy go-helloworld -o yaml
    - kubectl logs RESOURCE/NAME : e.g. kubectl logs deployment.apps/go-helloworld
    - kubectl delete RESOURCE NAME : e.g. kubectl delete deployment go-helloworld
+   - kubectl lablel RESOURCE NAME key=value : kubectl label deploy nginx-alpine app=nginx tag=alpine
