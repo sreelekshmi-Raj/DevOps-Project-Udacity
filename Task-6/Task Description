@@ -1,0 +1,39 @@
+Exercise: Kubernetes Resources
+In this exercise, we will deploy the following resources using the kubectl command. 
+
+1.A namespace:
+   name: demo
+   label: tier: test
+2.A deployment:
+   image: nginx:alpine
+   name:nginx-apline
+   namespace: demo
+   replicas: 3
+   labels: app: nginx, tag: alpine
+3.A service:
+   expose the above deployment on port 8111
+   namespace: demo
+4.A configmap:
+   name: nginx-version
+   containing key-value pair: version=alpine
+   namespace: demo
+
+Answers:
+
+1.created the namespace 
+# label option is not available with "kubectl create"
+kubectl create ns demo
+# label the namespace
+kubectl label ns demo tier=test
+
+2.created the deployment 
+kubectl create deploy nginx-alpine --image=nginx:alpine  --replicas=3 --namespace demo
+# label the deployment
+kubectl label deploy nginx-alpine app=nginx tag=alpine --namespace demo
+
+3.Created the service
+# expose the nginx-alpine deployment, which will create a service
+kubectl expose deployment nginx-alpine --port=8111 --namespace demo
+
+4.Created the config map
+kubectl create configmap nginx-version --from-literal=version=alpine --namespace demo
