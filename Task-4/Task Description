@@ -1,0 +1,48 @@
+Deploy Kubernetes Cluster
+This task focus on provisioning a vagrant box and installing a Kubernetes cluster using k3s.Make sure to have VirtualBox 6.1.16 or higher installed .
+
+PREREQUISITES
+
+1.Clone course repository : git clone https://github.com/udacity/nd064_course_1.git 
+2.Navigate inside "exercise" directory and examine "Vagrantfile"
+3.Create a vagrant box using "vagrant up" command. (Note: We need to be in the same repository as the vagrantfile for this      command  to work)
+4.SSH into the vagrant box using "vagrant ssh" command
+5.Deploy a Kubernetes cluster using k3s : curl -sfL https://get.k3s.io | sh -
+6.Examine the cluster using "kubectl" command (Note : We need to be root to access the kubeconfig file ,use "sudo su -" before using kubectl commands )
+
+Exercise
+
+Now we have a Kubernetes cluster up and running. Examine the cluster and identity of the following details.
+
+1.From the kubeconfig, identify:
+the IP and port of the API server
+authentication mechanism
+   K3s stores the kubeconfig file under "/etc/rancher/k3s/k3s.yaml" path
+   The IP and port of the API server: https://127.0.0.1:6443
+   Authentication mechanism: username(admin) and password
+
+2.From the cluster using kubectl commands to identify:
+endpoints of the control plane and add-ons
+amount of nodes
+node internal IP
+the pod CIDR allocate to the node
+   1)endpoints of the control plane and add-ons: kubectl cluster-info [to get the control plane and add-ons endpoints]
+  
+   Kubernetes control plane is running at https://127.0.0.1:6443
+   CoreDNS is running at https://127.0.0.1:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+   Metrics-server is running at https://127.0.0.1:6443/api/v1/namespaces/kube-system/services/https:metrics-server:/proxy
+
+   2)amount of nodes: kubectl get nodes [to get all the nodes in the cluster]
+   
+   NAME        STATUS   ROLES                  AGE   VERSION
+   localhost   Ready    control-plane,master   54m   v1.21.2+k3s1
+
+   3)node internal IP : kubectl get nodes -o wide [to get extra details about the nodes, including internal IP]
+   
+   NAME        STATUS   ROLES                  AGE   VERSION        INTERNAL-IP   EXTERNAL-IP   OS-IMAGE   KERNEL-VERSION  CONTAINER-RUNTIME  
+   localhost   Ready    control-plane,master   54m   v1.21.2+k3s1   10.0.2.15     <none>        openSUSE Leap 15.2   5.3.18-lp152.78-default   containerd://1.4.4-k3s2
+
+   4)the pod CIDR allocate to the node: kubectl describe node localhost | grep CIDR [to get all the configuration details about the node, including the allocated pod CIDR]
+   
+    PodCIDR:                      10.42.0.0/24
+    PodCIDRs:                     10.42.0.0/24
