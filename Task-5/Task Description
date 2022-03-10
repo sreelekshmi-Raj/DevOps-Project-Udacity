@@ -1,0 +1,30 @@
+We going to deploy the packaged Go hello-world application to a Kubernetes cluster.Thirough this task we learn how an application can be deployed, configured, and managed within a Kubernetes cluster using Deployment, ReplicaSet, and pod resources.
+
+IMPORTANT POINTS
+Kubernetes provides a rich collection of resources that are used to deploy, configure, and manage an application. Some of the widely used resources are:
+   Pods - the atomic element within a cluster to manage an application
+   Deployments & ReplicaSets - oversees a set of pods for the same application
+   Services & Ingress - ensures connectivity and reachability to pods
+   Configmaps & Secrets - pass configuration to pods
+   Namespaces - provides a logical separation between multiple applications and their resources
+   Custom Resource Definition (CRD) - extends Kubernetes API to support custom resources
+
+
+STEPS
+1.Create a Deployment for the Go hello-world application : 
+   kubectl create deploy go-helloworld --image=pixelpotato/go-helloworld:v1.0.0 
+2.Access the container in a browser/local host we need to use port-forward command.
+   kubectl port-forward po/go-helloworld-6998589d46-2ksxr 5111:6111
+3.Access the application on: http://127.0.0.1:5111/
+4.Upadate our application with rollingupdate strategy.So edit deployment resource : kubectl edit deploy  go-helloworld -o yaml
+5.Update image from pixelpotato/go-helloworld:v1.0.0 to pixelpotato/go-helloworld:v2.0.0
+6.Verify new replicaset using : kubectl get rs
+7.Access the new container in a browser/local host we need to use port-forward command.
+   kubectl port-forward po/go-helloworld-64477fbc6f-fzqnx 5111:6112
+8.Access the application on: http://127.0.0.1:5111/
+
+
+OTHER USEFUL COMMANDS
+   - kubectl get deploy / kubectl get deployments 
+   - kubectl get rs / kubectl get replicaset / kubectl get replicasets
+   - kubectl get po / kubectl get pod / kubectl get pods
