@@ -14,4 +14,4 @@ II. Creating Docker Image : A Docker image is a read-only template that enables 
 
 III. Pushing image to a public Docker image registry : Docker registry is a central mechanism to store and distribute Docker images
     6.Tag the "python-helloworld" application : docker tag python-helloworld pixelpotato/python-helloworld:v1.0.0
-    7.Push the image to a registry : docker push pixelpotato/python-helloworld:v1.0.0
+    7.Push the image to a registry : docker push pixelpotato/python-helloworld:v1.0.0 ["docker login" if needed]
