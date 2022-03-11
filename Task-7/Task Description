@@ -1,0 +1,59 @@
+Declarative Kubernetes Manifests
+
+Imperative configuration - Resource management technique, that operates and interacts directly with the live objects within the cluster. e.g. kubectl create deploy [...] using the imperative approach.This technique is best suited for development stages only.
+
+Declarative configuration - Resource management technique, that operates and manages resources using YAML manifests stored locally.This approach is recommended for production releases
+
+YAML Manifest structure
+A YAML manifest consists of 4 mandatory sections:
+   apiversion - API version used to create a Kubernetes object.
+   kind - object type to be created or configured.
+   metadata - stores data that makes the object identifiable, such as its name, namespace, and labels.
+   spec - defines the desired configuration state of the resource.
+
+Useful commands
+1.Create a resource defined in the YAML manifests with the name manifest.yaml
+kubectl apply -f manifest.yaml
+
+2.Delete a resource defined in the YAML manifests with the name manifest.yaml
+kubectl delete -f manifest.yaml
+
+3.Get the base YAML templated for a demo Deployment running a nxing application
+ kubectl create deploy demo --image=nginx --dry-run=client -o yaml
+
+Exercise : 1
+
+This task showcases how a Namespace and Deployment resource can be deployed using YAML manifests.(Declarative approach)
+Use dry run on clent side and the -o yaml tags to create a base template for the configuration and further extend for more advanced parametres
+
+STEPS
+
+1.Create a namespace at client end and store the file in namespace.yaml file : 
+kubectl create ns demo --dry-run=client -o yaml > namespace.yaml
+Go through the yaml file : cat namespace.yaml
+Create namespace using declarative approach : kubectl apply -f namespace.yaml
+
+2.Create a manifest for deployment resource at client end and store the file in deploy.yaml file :
+kubectl create deploy busybox --image=busybox -r=5 -n demo --dry-run=client -o yaml > deploy.yaml
+Create deploy using declarative approach : kubectl apply -f deploy.yaml
+Verify the deployments: kubectl get deploy -n demo
+Verify the pods in the namespace demo : kubectl get po -n demo
+
+Exercise : 2
+
+Try this declarative approach to go-helloworld application
+
+1.Create a manifest for deployment resource (e.g. go-deploy.yaml)
+Create deploy using declarative approach : kubectl apply -f go-deploy.yaml
+Verify the deployments: kubectl get deploy
+Verify the pods : kubectl get po 
+Access the container in a browser/local host we need to use port-forward command : kubectl port-forward po/go-helloworld-687c566bbc-vw7sm 8111:6112
+
+2.Create a manifest for service resource (e.g. go-service.yaml)
+Create service using declarative approach : kubectl apply -f go-service.yaml
+Verify the service : kubectl get svc
+Access our application from cluster : kubectl run test-$RANDOM --namespace=default --rm -it --image=alpine -- sh
+then use the command inside the shell :  wget -qO- 10.109.86.160:8111
+
+
+   
