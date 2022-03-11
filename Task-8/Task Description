@@ -1,0 +1,35 @@
+Exercise: Declarative Kubernetes Manifests
+
+Kubernetes is widely known for its imperative and declarative management techniques. In the previous exercise, we deployed the following resources using the imperative approach. Now deploy them using the declarative approach.
+
+1.A namespace:
+   name: demo
+   label: tier: test
+2.A deployment:
+   image: nginx:alpine
+   name:nginx-apline
+   namespace: demo
+   replicas: 3
+   labels: app: nginx, tag: alpine
+3.A service:
+   expose the above deployment on port 8111
+   namespace: demo
+4.A configmap:
+   name: nginx-version
+   containing key-value pair: version=alpine
+   namespace: demo
+
+
+Solution: Declarative Kubernetes Manifests
+
+Declarative Approach : The declarative approach consists of using a full YAML definition of resources.
+
+To create the resources, use the following command:
+
+kubectl apply -f namespace.yaml
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+kubectl apply -f configmap.yaml
+
+To inspect all the resources within the namespace, use the command: kubectl get all -n demo
+
