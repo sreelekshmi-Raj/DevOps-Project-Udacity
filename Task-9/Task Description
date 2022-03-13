@@ -1,0 +1,20 @@
+Automate the Continuous Integration stages using GitHub Actions(to build, test, and package an application)
+
+Use GitHub action to run test to python helloworld application.
+Application: app.py
+Requirements for this application : requirements.txt
+Test for the application : test_with_pytest.py
+Github Action/workflow : pytest.yml file within the .github/workflows directory.
+
+To trigger the workflow a new commit is necessary (e.g. editing the README.md fie).Once committed github actions are triggered.
+For the event  go to Aactions tab in github then pytest workflow.
+Check on the latest commit and find the pytest against different python version.We can see more verbose output for all the events that run. 
+
+Refer this repo : https://github.com/sreelekshmi-Raj/GitHub-Actions.git
+
+
+
+
+
+
+
