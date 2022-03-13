@@ -1,0 +1,36 @@
+Exercise: Continuous Application Deployment
+
+Using GitHub Actions to automate the packaging of an application.
+
+STEPS:
+1.create new GitHub repository with the name "python-helloworld"
+2.Create the "python-helloworld" application : app.py
+3.Create Docker file with the following requirements:
+    Image name: python-helloworld
+    Tag: latest
+    Platforms: platforms: linux/amd64,linux/arm6
+4.Create the repository to store the GitHub Actions using "mkdir -p /.github/workflows" command
+5.Create a new GitHub Actions in the "/.github/workflows/docker-build.yml" that will build and push the Docker image for a Python web application, with the following requirements:
+    Image name: python-helloworld
+    Tag: latest
+    Platforms: platforms: linux/amd64,linux/arm64
+
+6.The above GitHub action uses DockerHub Tokens and encrypted GitHub secrets to login into DockerHub and to push new images. To set up these credentials refer to the following resources:
+
+Create DockerHub Tokens - DOCKERHUB_USERNAME , DOCKERHUB_TOKEN
+Create GitHub encrypted secrets
+Go to Settings tab  of the repository -> In left pannel click Secret tab and set DOCKERHUB_USERNAME , DOCKERHUB_TOKEN
+
+7.To trigger the workflow a new commit is necessary (e.g. editing the README.md fie).Once committed github actions are triggered.
+8.For the event  go to Aactions tab in github then "Docker Build and Push" workflow.
+9.Check on the latest commit of "Docker Build and Push" action.We can see more verbose output for all the events that run. 
+10.The final result can be verified from DockerHub by checking the new version of Docker image
+
+Refer this repo : https://github.com/sreelekshmi-Raj/python-helloworld.git
+
+
+
+
+
+
+
