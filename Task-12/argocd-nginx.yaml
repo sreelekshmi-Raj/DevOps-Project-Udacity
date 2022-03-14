@@ -10,7 +10,7 @@ spec:
   project: default
   source:
     path: manifests 
-    repoURL:  https://github.com/sreelekshmi-Raj/DevOps-Project-Udacity/blob/master/Task-12 
+    repoURL:  https://github.com/sreelekshmi-Raj/DevOps-Project-Udacity/Task-12 
     targetRevision: HEAD
   # Sync policy
   syncPolicy: {}
