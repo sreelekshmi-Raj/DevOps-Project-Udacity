@@ -1,16 +1,50 @@
-Automate the Continuous Integration stages using GitHub Actions(to build, test, and package an application)
+Exercise: The CD Fundamentals
 
-Use GitHub action to run test to python helloworld application.
-Application: app.py
-Requirements for this application : requirements.txt
-Test for the application : test_with_pytest.py
-Github Action/workflow : pytest.yml file within the .github/workflows directory.
+Continuous Delivery (CD) is the ability to get code changes reliably to production environments. This practice should be automated and should enable developers to provide value to consumers efficiently.
 
-To trigger the workflow a new commit is necessary (e.g. editing the README.md fie).Once committed github actions are triggered.
-For the event  go to Aactions tab in github then pytest workflow.
-Check on the latest commit and find the pytest against different python version.We can see more verbose output for all the events that run. 
+We use ArgoCD to automate the delivery of an application to a Kubernetes cluster.
 
-Refer this repo : https://github.com/sreelekshmi-Raj/GitHub-Actions.git
+Preequisites
+
+1.Insatall ArgoCD inside minikube
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+2.The YAML manifest for the NodePort service can be found under the argocd-server-nodeport.yaml file.
+Create the service: kubectl apply -f argocd-server-nodeport.yaml
+3.Access the ArgoCD UI by going to http://127.0.0.1:54315 or http://127.0.0.1:54316
+[ minikube service --url argocd-server-nodeport -n argocd ]
+4.When accessing the ArgoCD UI, a browser SSL warning is encountered. This is happening because the ArgoCD server is not setup with SSL certificates to authenticate the server. Hence, an insecure connection is established with the server. As a result, the warning prompt is encountered and we should just bypass the warning page.
+5.Login credentials can be retrieved using the below steps.
+Username : admin 
+Password : kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo ,we get a string
+
+Application Deployment
+Create an ArgoCD application named "nginx-alpine" and use the manifests provided in this repository.
+
+1.manifests folder contains the YAML configuration for the nginx-alpine application : configmap.yaml,deployment.yaml,namespace.yaml,service.yaml
+2.argocd-nginx manifest for the Application CRD is used to deploy the nginx-alpine application : argocd-nginx.yaml
+3.Deploy application CRD (Custom Resource Definitions) : kubectl apply -f argocd-nginx.yaml
+4.Verify the application: kubectl get application -n argocd
+5.Go to ArgoCD UI and verify.Sync the nginx-alpine application.We can see the namespace,cm,svc,deployment and 3 pods up and running.
+6.Check the pods inside the cluster : kubectl get po -A / kubectl get po -n demo
+7.Verify the deployment,services ,configmaos and namespaces
+    kubectl get ns
+    kubectl get deploy -n demo
+    kubectl get svc -n demo
+    kubectl get cm -n demo
+
+Check the git repo : https://github.com/sreelekshmi-Raj/ArgoCD-Devops-nginx-alpine
+
+
+
+
+
+
+
+
+
+
+
 
 
 
