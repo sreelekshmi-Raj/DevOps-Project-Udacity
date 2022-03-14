@@ -1,0 +1,44 @@
+Deploy an application using ArgoCD (CD)
+
+Preequisites
+
+1.Insatall ArgoCD inside minikube
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+2.The YAML manifest for the NodePort service can be found under the argocd-server-nodeport.yaml file.
+Create the service: kubectl apply -f argocd-server-nodeport.yaml
+3.Access the ArgoCD UI by going to http://127.0.0.1:54315 or http://127.0.0.1:54316
+[ minikube service --url argocd-server-nodeport -n argocd ]
+4.When accessing the ArgoCD UI, a browser SSL warning is encountered. This is happening because the ArgoCD server is not setup with SSL certificates to authenticate the server. Hence, an insecure connection is established with the server. As a result, the warning prompt is encountered and we should just bypass the warning page.
+5.Login credentials can be retrieved using the below steps.
+Username : admin 
+Password : kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo ,we get a string
+
+Application Deployment
+
+1.Python-manifests folder contains the YAML configuration for the Python hello-world application : deployment.yaml
+2.argocd-python manifest for the Application CRD is used to deploy the Python hello-world application : argocd-python.yaml
+3.Deploy application CRD : kubectl apply -f argocd-python.yaml
+4.Verify the application: kubectl get application -n argocd
+5.Go to ArgoCD UI and verify.Sync the python-helloworld application.We can see the deployment and 3 pods up and running.
+6.Check the pods inside the cluster : kubectl get po -A / kubectl get po (default namespace)
+(-A for getting pods in all namespaces)
+7.ArgoCd can able to identify new changes on manifest and apply them manually or automatically.So update the deployment manifest Change image to pixelpotato/python-helloworld:v1.1.0
+8.Go to ArgoCD UI and Sync.New replicaset created and see the pods with old configuration are removed.
+9.Check the pods inside the cluster : kubectl get po 
+
+
+Check the Git Repo : https://github.com/sreelekshmi-Raj/ArgoCD-Devops.git
+
+
+
+
+
+
+
+
+
+
+
+
+
